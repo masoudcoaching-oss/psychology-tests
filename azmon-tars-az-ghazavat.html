@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آزمون ترس از قضاوت</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --pr:    #3b3486;
+  --pr-d:  #252060;
+  --pr-l:  #7b75c0;
+  --ac:    #e07060;
+  --ac-l:  #f0a898;
+  --bg:    #f0eff8;
+  --card:  #ffffff;
+  --brd:   #dddaf0;
+  --sh:    rgba(59,52,134,.1);
+  --txt:   #1a1830;
+  --mid:   #4a4680;
+  --lgt:   #9490c0;
+  --low-c: #d94f45;  --low-b: #fef0ef;
+  --med-c: #cc7a2a;  --med-b: #fef6ee;
+  --hi-c:  #3a9968;  --hi-b:  #eef8f3;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Vazirmatn',sans-serif;background:var(--bg);
+  min-height:100vh;color:var(--txt);overflow-x:hidden}
+
+/* BG */
+.bg-dots{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(59,52,134,.06) 1.2px,transparent 1.2px);
+  background-size:28px 28px}
+.bg-orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0}
+.orb1{top:-80px;left:-80px;width:360px;height:360px;
+  background:radial-gradient(circle,rgba(123,117,192,.2) 0%,transparent 70%)}
+.orb2{bottom:-80px;right:-80px;width:320px;height:320px;
+  background:radial-gradient(circle,rgba(224,112,96,.14) 0%,transparent 70%)}
+
+.wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:18px 14px 70px}
+
+/* HEADER */
+.hdr{background:linear-gradient(140deg,var(--pr) 0%,var(--pr-d) 100%);
+  border-radius:26px;padding:34px 26px 28px;margin-bottom:18px;
+  text-align:center;position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(37,32,96,.3)}
+.hdr::before{content:'';position:absolute;top:-50px;right:-50px;
+  width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hdr::after{content:'';position:absolute;bottom:-30px;left:-30px;
+  width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.04)}
+.hdr-icon{font-size:44px;display:block;margin-bottom:10px;position:relative;z-index:1}
+.hdr-title{font-size:24px;font-weight:800;color:#fff;
+  margin-bottom:7px;position:relative;z-index:1}
+.hdr-sub{font-size:13.5px;color:rgba(255,255,255,.72);
+  position:relative;z-index:1;line-height:1.75}
+.hdr-pills{display:flex;justify-content:center;gap:12px;
+  margin-top:20px;position:relative;z-index:1}
+.hdr-pill{background:rgba(255,255,255,.13);border-radius:12px;
+  padding:8px 18px;text-align:center}
+.pill-n{font-size:18px;font-weight:800;color:#fff}
+.pill-l{font-size:11px;color:rgba(255,255,255,.65);margin-top:1px}
+
+/* CARDS */
+.card{background:var(--card);border-radius:20px;padding:22px;
+  margin-bottom:16px;box-shadow:0 3px 20px var(--sh)}
+.card-lbl{font-size:13px;font-weight:700;color:var(--pr);
+  margin-bottom:15px;display:flex;align-items:center;gap:7px}
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:12px;font-weight:600;color:var(--mid)}
+.fld input,.fld select{padding:11px 13px;border:1.5px solid var(--brd);
+  border-radius:12px;font-size:14px;font-family:'Vazirmatn',sans-serif;
+  outline:none;color:var(--txt);background:#fafafe;
+  transition:border-color .25s,box-shadow .25s;text-align:right}
+.fld input:focus,.fld select:focus{border-color:var(--pr);
+  box-shadow:0 0 0 3px rgba(59,52,134,.1)}
+
+.instr{background:rgba(59,52,134,.07);border:1.5px solid rgba(59,52,134,.14);
+  border-radius:16px;padding:15px 17px;margin-bottom:16px;
+  font-size:13.5px;color:var(--pr-d);line-height:1.95}
+
+/* PROGRESS */
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.prog-track{flex:1;height:7px;background:var(--brd);border-radius:20px;overflow:hidden}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--pr),var(--pr-l));
+  border-radius:20px;width:0%;transition:width .4s ease}
+.prog-txt{font-size:12px;font-weight:600;color:var(--lgt);white-space:nowrap}
+
+/* QUESTION CARD */
+.qcard{background:var(--card);border:1.5px solid var(--brd);border-radius:22px;
+  padding:22px;margin-bottom:14px;
+  box-shadow:0 2px 12px rgba(0,0,0,.04);
+  transition:border-color .3s,box-shadow .3s;
+  animation:fadeUp .4s ease backwards}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.qcard.done{border-color:rgba(123,117,192,.6);
+  box-shadow:0 4px 20px rgba(59,52,134,.12)}
+.qcard.err{border-color:var(--low-c);
+  box-shadow:0 4px 16px rgba(217,79,69,.15);
+  animation:shake .35s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+
+.q-row{display:flex;align-items:flex-start;gap:11px;margin-bottom:18px}
+.q-badge{background:var(--pr);color:#fff;min-width:28px;height:28px;
+  border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0;transition:background .3s}
+.qcard.done .q-badge{background:var(--ac)}
+.q-txt{font-size:15px;color:var(--txt);line-height:1.8;font-weight:500;padding-top:3px}
+
+/* 5-OPTION SCALE (horizontal) */
+.scale-labels{display:flex;justify-content:space-between;
+  margin-bottom:8px;padding:0 2px}
+.scale-lbl{font-size:11px;color:var(--lgt);font-weight:500}
+.opts-row{display:flex;gap:8px}
+.opt-btn{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  gap:6px;padding:12px 4px 10px;
+  border:1.5px solid var(--brd);border-radius:14px;
+  cursor:pointer;transition:all .2s;background:var(--card);
+}
+.opt-btn:hover{border-color:var(--pr-l);background:rgba(59,52,134,.04)}
+.opt-btn.sel{border-color:var(--pr);background:var(--pr)}
+.opt-btn.sel .opt-num{color:rgba(255,255,255,.7)}
+.opt-btn.sel .opt-dot-wrap{border-color:rgba(255,255,255,.5)}
+.opt-btn.sel .opt-inner-dot{transform:scale(1);background:#fff}
+.opt-dot-wrap{width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--brd);display:flex;align-items:center;
+  justify-content:center;transition:all .22s}
+.opt-inner-dot{width:10px;height:10px;border-radius:50%;
+  background:var(--pr);transform:scale(0);transition:transform .22s}
+.opt-btn.sel .opt-dot-wrap .opt-inner-dot{transform:scale(1)}
+.opt-num{font-size:12px;font-weight:700;color:var(--lgt);transition:color .2s}
+.opt-btn.sel .opt-num{color:rgba(255,255,255,.8)}
+
+/* SUBMIT */
+.sub-btn{width:100%;padding:17px;margin-top:22px;
+  background:linear-gradient(135deg,var(--pr),var(--pr-d));
+  color:#fff;border:none;border-radius:18px;
+  font-size:16px;font-weight:700;font-family:'Vazirmatn',sans-serif;
+  cursor:pointer;box-shadow:0 6px 24px rgba(59,52,134,.32);
+  transition:transform .2s,box-shadow .2s;
+  display:flex;align-items:center;justify-content:center;gap:10px}
+.sub-btn:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(59,52,134,.38)}
+.sub-btn:active{transform:translateY(0)}
+
+/* RESULT */
+.result-page{display:none}
+.res-hero{background:linear-gradient(140deg,var(--pr),var(--pr-d));
+  border-radius:26px;padding:36px 24px 30px;text-align:center;
+  margin-bottom:18px;position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(37,32,96,.3)}
+.res-hero::before{content:'';position:absolute;top:-40px;left:-40px;
+  width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
+.res-emoji{font-size:54px;display:block;margin-bottom:10px;
+  position:relative;z-index:1;
+  animation:pop .55s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.res-sub{font-size:13px;color:rgba(255,255,255,.65);
+  position:relative;z-index:1;margin-bottom:8px}
+.res-num{font-size:76px;font-weight:800;color:#fff;
+  line-height:1;position:relative;z-index:1}
+.res-of{font-size:22px;color:rgba(255,255,255,.5)}
+.res-pill{display:inline-block;padding:8px 26px;border-radius:50px;
+  font-size:16px;font-weight:700;margin-top:16px;position:relative;z-index:1}
+.p-low{background:rgba(58,153,104,.28);color:#a8ffd3}
+.p-med{background:rgba(204,122,42,.28);color:#ffd9a8}
+.p-hi {background:rgba(217,79,69,.28);color:#ffb0ab}
+
+.bar-card{background:var(--card);border-radius:20px;padding:22px;
+  margin-bottom:15px;box-shadow:0 3px 20px var(--sh)}
+.bar-labels{display:flex;justify-content:space-between;
+  font-size:12px;color:var(--lgt);margin-bottom:9px}
+.bar-track{height:13px;background:var(--brd);border-radius:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:10px;width:0%;
+  transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.fill-low{background:linear-gradient(90deg,#a8dfc4,var(--hi-c))}
+.fill-med{background:linear-gradient(90deg,#f5c48a,var(--ac))}
+.fill-hi {background:linear-gradient(90deg,#f4a09c,var(--low-c))}
+.bar-marks{display:flex;justify-content:space-between;
+  margin-top:7px;font-size:11px;color:var(--lgt)}
+
+.desc-card{background:var(--card);border-radius:20px;padding:22px;
+  margin-bottom:15px;box-shadow:0 3px 20px var(--sh)}
+.desc-lbl{font-size:13px;font-weight:700;color:var(--pr);
+  margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.desc-txt{font-size:14px;color:var(--mid);line-height:2.05}
+
+/* Q scores detail */
+.q-scores{display:flex;gap:10px;margin-bottom:15px}
+.q-score-cell{flex:1;background:var(--card);border-radius:14px;
+  padding:14px 8px;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.05);border:1.5px solid var(--brd)}
+.qsc-num{font-size:11px;color:var(--lgt);margin-bottom:5px}
+.qsc-val{font-size:22px;font-weight:800;color:var(--pr)}
+
+.status{border-radius:14px;padding:13px 17px;font-size:13px;
+  margin-bottom:14px;display:none}
+.status.show{display:block}
+.status.ok{background:var(--hi-b);color:var(--hi-c)}
+.status.er{background:var(--low-b);color:var(--low-c)}
+
+.reset-btn{width:100%;padding:15px;background:var(--card);
+  color:var(--pr);border:2px solid var(--brd);border-radius:16px;
+  font-size:15px;font-weight:600;font-family:'Vazirmatn',sans-serif;
+  cursor:pointer;transition:all .2s}
+.reset-btn:hover{border-color:var(--pr);background:rgba(59,52,134,.05)}
+
+@media(max-width:480px){
+  .info-grid{grid-template-columns:1fr}
+  .opts-row{gap:5px}
+  .opt-btn{padding:10px 2px 8px}
+  .res-num{font-size:58px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-dots"></div>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+
+<div class="wrap">
+
+  <!-- FORM -->
+  <div id="formPage">
+
+    <div class="hdr">
+      <span class="hdr-icon">🪞</span>
+      <div class="hdr-title">آزمون ترس از قضاوت</div>
+      <div class="hdr-sub">این آزمون میزان نگرانی شما از قضاوت دیگران را می‌سنجد</div>
+      <div class="hdr-pills">
+        <div class="hdr-pill"><div class="pill-n">۴</div><div class="pill-l">سوال</div></div>
+        <div class="hdr-pill"><div class="pill-n">۲</div><div class="pill-l">دقیقه</div></div>
+        <div class="hdr-pill"><div class="pill-n">۵</div><div class="pill-l">گزینه</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">👤 اطلاعات شخصی
+        <span style="font-weight:400;color:var(--lgt);font-size:12px">(اختیاری)</span>
+      </div>
+      <div class="info-grid">
+        <div class="fld"><label>نام و نام‌خانوادگی</label>
+          <input type="text" id="f_name" placeholder="اختیاری"></div>
+        <div class="fld"><label>سن</label>
+          <input type="number" id="f_age" placeholder="مثلاً ۲۵" min="10" max="100"></div>
+        <div class="fld"><label>جنسیت</label>
+          <select id="f_gender">
+            <option value="">انتخاب کنید</option>
+            <option value="مرد">مرد</option>
+            <option value="زن">زن</option>
+            <option value="ترجیح می‌دهم نگویم">ترجیح می‌دهم نگویم</option>
+          </select></div>
+        <div class="fld"><label>تحصیلات</label>
+          <select id="f_edu">
+            <option value="">انتخاب کنید</option>
+            <option value="زیر دیپلم">زیر دیپلم</option>
+            <option value="دیپلم">دیپلم</option>
+            <option value="کاردانی">کاردانی</option>
+            <option value="کارشناسی">کارشناسی</option>
+            <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+            <option value="دکتری و بالاتر">دکتری و بالاتر</option>
+          </select></div>
+      </div>
+    </div>
+
+    <div class="instr">
+      📌 <strong>راهنما:</strong> چهار جمله زیر را بخوانید و بر اساس اینکه هر جمله چقدر حال شما را توصیف می‌کند، یکی از گزینه‌های <strong>هرگز</strong> تا <strong>همیشه</strong> را انتخاب کنید.
+    </div>
+
+    <div class="prog-row">
+      <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
+      <div class="prog-txt" id="progTxt">۰ از ۴</div>
+    </div>
+
+    <div id="qBox"></div>
+
+    <button class="sub-btn" onclick="handleSubmit()">
+      <span>ثبت و مشاهده نتیجه</span><span>←</span>
+    </button>
+
+  </div>
+
+  <!-- RESULT -->
+  <div class="result-page" id="resultPage">
+
+    <div class="res-hero">
+      <span class="res-emoji" id="r_emoji">🪞</span>
+      <div class="res-sub">نمره ترس از قضاوت شما</div>
+      <div class="res-num">
+        <span id="r_score">0</span>
+        <span class="res-of">/ ۲۰</span>
+      </div>
+      <div class="res-pill" id="r_pill">—</div>
+    </div>
+
+    <div class="bar-card">
+      <div class="bar-labels">
+        <span>پایین &nbsp;(۴–۹)</span>
+        <span>متوسط &nbsp;(۱۰–۱۴)</span>
+        <span>(۱۵–۲۰)&nbsp; بالا</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" id="r_fill"></div>
+      </div>
+      <div class="bar-marks">
+        <span>۴</span><span>۸</span><span>۱۲</span><span>۱۶</span><span>۲۰</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:15px">
+      <div class="card-lbl">📊 نمره هر سوال</div>
+      <div class="q-scores" id="qScores"></div>
+    </div>
+
+    <div class="desc-card">
+      <div class="desc-lbl">📖 تفسیر نتیجه</div>
+      <div class="desc-txt" id="r_desc">—</div>
+    </div>
+
+    <div class="status" id="statusEl"></div>
+
+    <button class="reset-btn" onclick="resetTest()">🔄 شروع مجدد آزمون</button>
+
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL="https://script.google.com/macros/s/AKfycbxhEZaA1kQFxDpxe9eqFl6rmbKgt8ZbPqSQTXWOBBKgppTx-6gfSiIozLdHcQLJHUw/exec";
+const SHEET="آزمون ترس از قضاوت";
+
+const Qs=[
+  {t:"نگران قضاوت دیگران درباره رفتار و گفتارم هستم."},
+  {t:"از ابراز نظر در جمع خودداری می‌کنم تا مورد انتقاد قرار نگیرم."},
+  {t:"وقتی اشتباه می‌کنم، بیشتر نگران نظر دیگران هستم تا اصلاح اشتباه."},
+  {t:"تصور اینکه دیگران درباره‌ام منفی فکر کنند، در من اضطراب ایجاد می‌کند."},
+];
+
+const OPTS=[
+  {l:"هرگز",    v:1},
+  {l:"به‌ندرت", v:2},
+  {l:"گاهی",   v:3},
+  {l:"اغلب",   v:4},
+  {l:"همیشه",  v:5},
+];
+
+const toP=n=>n.toString().replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+let ans=new Array(Qs.length).fill(null);
+
+/* Build */
+const qBox=document.getElementById("qBox");
+Qs.forEach((q,qi)=>{
+  const card=document.createElement("div");
+  card.className="qcard";
+  card.id="qc"+qi;
+  card.style.animationDelay=(qi*.07)+"s";
+
+  const scaleLabels=`
+    <div class="scale-labels">
+      <span class="scale-lbl">هرگز</span>
+      <span class="scale-lbl">همیشه</span>
+    </div>`;
+
+  const btns=OPTS.map((o,oi)=>`
+    <div class="opt-btn" id="ob${qi}_${oi}" onclick="pick(${qi},${oi},${o.v})">
+      <div class="opt-dot-wrap"><div class="opt-inner-dot"></div></div>
+      <div class="opt-num">${toP(o.v)}</div>
+    </div>`).join("");
+
+  card.innerHTML=`
+    <div class="q-row">
+      <div class="q-badge" id="qb${qi}">${toP(qi+1)}</div>
+      <div class="q-txt">${q.t}</div>
+    </div>
+    ${scaleLabels}
+    <div class="opts-row">${btns}</div>`;
+  qBox.appendChild(card);
+});
+
+function pick(qi,oi,val){
+  OPTS.forEach((_,i)=>document.getElementById(`ob${qi}_${i}`).classList.remove("sel"));
+  document.getElementById(`ob${qi}_${oi}`).classList.add("sel");
+  const wasNull=ans[qi]===null;
+  ans[qi]={raw:val};
+  document.getElementById("qc"+qi).classList.add("done");
+  document.getElementById("qc"+qi).classList.remove("err");
+  updProg();
+  if(wasNull){
+    setTimeout(()=>{
+      const next=ans.findIndex((a,i)=>i>qi&&a===null);
+      if(next!==-1) document.getElementById("qc"+next)
+        .scrollIntoView({behavior:"smooth",block:"center"});
+    },280);
+  }
+}
+
+function updProg(){
+  const done=ans.filter(a=>a!==null).length;
+  document.getElementById("progFill").style.width=(done/Qs.length*100)+"%";
+  document.getElementById("progTxt").textContent=toP(done)+" از "+toP(Qs.length);
+}
+
+function handleSubmit(){
+  let bad=false,firstBad=-1;
+  ans.forEach((a,qi)=>{
+    if(a===null){
+      document.getElementById("qc"+qi).classList.add("err");
+      bad=true;if(firstBad<0)firstBad=qi;
+    }
+  });
+  if(bad){
+    alert("⚠️ لطفاً به تمام سوالات پاسخ دهید.");
+    document.getElementById("qc"+firstBad).scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  let total=0;
+  const scores=ans.map(a=>{total+=a.raw;return a.raw;});
+  showResult(total,scores);
+}
+
+function showResult(total,scores){
+  document.getElementById("formPage").style.display="none";
+  document.getElementById("resultPage").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  document.getElementById("r_score").textContent=toP(total);
+
+  let emoji,level,pillCls,fillCls,desc;
+  if(total<=9){
+    emoji="😌";level="ترس از قضاوت پایین";pillCls="p-low";fillCls="fill-low";
+    desc="نمره شما نشان می‌دهد ترس از قضاوت در شما در سطح پایینی قرار دارد. شما نسبتاً راحت می‌توانید نظرات خود را بیان کنید و قضاوت دیگران تأثیر چندانی بر تصمیم‌گیری‌هایتان ندارد. این ویژگی به شما کمک می‌کند اصیل‌تر و آزادتر زندگی کنید.";
+  } else if(total<=14){
+    emoji="😐";level="ترس از قضاوت متوسط";pillCls="p-med";fillCls="fill-med";
+    desc="نمره شما در محدوده متوسط است. در بسیاری از موقعیت‌ها می‌توانید خودتان باشید، اما گاهی نگرانی از قضاوت دیگران مانع ابراز احساسات یا عقاید شما می‌شود. با تمرین اعتماد به نفس و خودپذیری می‌توان این سطح را بهبود داد.";
+  } else {
+    emoji="😟";level="ترس از قضاوت بالا";pillCls="p-hi";fillCls="fill-hi";
+    desc="نمره شما نشان‌دهنده ترس بالایی از قضاوت دیگران است. این ترس ممکن است باعث شود از موقعیت‌های اجتماعی اجتناب کنید یا همیشه سعی کنید همه را راضی نگه دارید. مشاوره با یک متخصص روانشناس می‌تواند در کاهش این نگرانی بسیار مؤثر باشد.";
+  }
+
+  document.getElementById("r_emoji").textContent=emoji;
+  const pill=document.getElementById("r_pill");
+  pill.textContent=level;pill.className="res-pill "+pillCls;
+  document.getElementById("r_desc").textContent=desc;
+
+  const fill=document.getElementById("r_fill");
+  fill.className="bar-fill "+fillCls;
+  setTimeout(()=>{fill.style.width=((total-4)/16*100)+"%"},350);
+
+  // Q scores
+  const grid=document.getElementById("qScores");
+  grid.innerHTML=scores.map((s,i)=>`
+    <div class="q-score-cell">
+      <div class="qsc-num">سوال ${toP(i+1)}</div>
+      <div class="qsc-val">${toP(s)}</div>
+    </div>`).join("");
+
+  saveData(total,level,scores);
+}
+
+function saveData(total,level,scores){
+  const now=new Date();
+  const dateFa=now.toLocaleDateString("fa-IR")+" ساعت "+now.toLocaleTimeString("fa-IR");
+  const payload={sheetName:SHEET,data:{}};
+  payload.data["تاریخ و زمان"]=dateFa;
+  payload.data["نام"]=document.getElementById("f_name").value||"ناشناس";
+  payload.data["سن"]=document.getElementById("f_age").value||"-";
+  payload.data["جنسیت"]=document.getElementById("f_gender").value||"-";
+  payload.data["تحصیلات"]=document.getElementById("f_edu").value||"-";
+  scores.forEach((s,i)=>{payload.data[`سوال ${i+1}`]=s;});
+  payload.data["نمره کل"]=total;
+  payload.data["سطح ترس از قضاوت"]=level;
+
+  const el=document.getElementById("statusEl");
+  const url=SCRIPT_URL+"?payload="+encodeURIComponent(JSON.stringify(payload));
+  fetch(url,{mode:"no-cors"})
+  .then(()=>{
+    el.textContent="✅ نتایج با موفقیت در Google Sheet ذخیره شد.";
+    el.className="status show ok";
+  }).catch(()=>{
+    el.textContent="⚠️ خطا در ذخیره داده. اتصال اینترنت را بررسی کنید.";
+    el.className="status show er";
+  });
+}
+
+function resetTest(){
+  ans=new Array(Qs.length).fill(null);
+  Qs.forEach((_,qi)=>{
+    document.getElementById("qc"+qi).classList.remove("done","err");
+    OPTS.forEach((_,oi)=>document.getElementById(`ob${qi}_${oi}`).classList.remove("sel"));
+  });
+  ["f_name","f_age"].forEach(id=>document.getElementById(id).value="");
+  ["f_gender","f_edu"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("r_fill").style.width="0";
+  document.getElementById("statusEl").className="status";
+  updProg();
+  document.getElementById("resultPage").style.display="none";
+  document.getElementById("formPage").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
