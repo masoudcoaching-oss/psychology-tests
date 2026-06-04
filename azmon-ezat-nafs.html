@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>آزمون عزت نفس</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pr:    #2b6155;
+  --pr-d:  #1b3e37;
+  --pr-l:  #6dac97;
+  --ac:    #e08a3c;
+  --ac-l:  #f5c48a;
+  --bg:    #f8f4ee;
+  --card:  #ffffff;
+  --brd:   #ddeae6;
+  --sh:    rgba(43,97,85,.1);
+  --txt:   #1c2b27;
+  --mid:   #4a6b60;
+  --lgt:   #8aaaa0;
+  --low-c: #d94f45;
+  --low-b: #fef0ef;
+  --med-c: #cc7a2a;
+  --med-b: #fef6ee;
+  --hi-c:  #3a9968;
+  --hi-b:  #eef8f3;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  font-family:'Vazirmatn',sans-serif;
+  background:var(--bg);
+  min-height:100vh;
+  color:var(--txt);
+  overflow-x:hidden;
+}
+
+/* ───── Background ───── */
+.bg-dots{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:radial-gradient(circle,rgba(43,97,85,.055) 1.2px,transparent 1.2px);
+  background-size:26px 26px;
+}
+.bg-orb{
+  position:fixed;pointer-events:none;border-radius:50%;z-index:0;
+}
+.bg-orb1{top:-120px;right:-120px;width:420px;height:420px;
+  background:radial-gradient(circle,rgba(109,172,151,.18) 0%,transparent 70%)}
+.bg-orb2{bottom:-100px;left:-100px;width:380px;height:380px;
+  background:radial-gradient(circle,rgba(224,138,60,.13) 0%,transparent 70%)}
+
+/* ───── Layout ───── */
+.wrap{position:relative;z-index:1;max-width:660px;margin:0 auto;padding:18px 14px 70px}
+
+/* ───── Header ───── */
+.hdr{
+  background:linear-gradient(140deg,var(--pr) 0%,var(--pr-d) 100%);
+  border-radius:26px;padding:34px 26px 28px;
+  margin-bottom:18px;text-align:center;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(27,62,55,.28);
+}
+.hdr::before{content:'';position:absolute;top:-50px;left:-50px;
+  width:200px;height:200px;border-radius:50%;
+  background:rgba(255,255,255,.06)}
+.hdr::after{content:'';position:absolute;bottom:-30px;right:-30px;
+  width:140px;height:140px;border-radius:50%;
+  background:rgba(255,255,255,.04)}
+.hdr-icon{font-size:44px;display:block;margin-bottom:10px;
+  position:relative;z-index:1;}
+.hdr-title{font-size:25px;font-weight:800;color:#fff;
+  margin-bottom:7px;position:relative;z-index:1;letter-spacing:-.3px}
+.hdr-sub{font-size:13.5px;color:rgba(255,255,255,.72);
+  position:relative;z-index:1;line-height:1.75}
+.hdr-pills{display:flex;justify-content:center;gap:12px;
+  margin-top:20px;position:relative;z-index:1}
+.hdr-pill{background:rgba(255,255,255,.13);backdrop-filter:blur(4px);
+  border-radius:12px;padding:8px 18px;text-align:center}
+.pill-n{font-size:19px;font-weight:800;color:#fff}
+.pill-l{font-size:11px;color:rgba(255,255,255,.65);margin-top:1px}
+
+/* ───── Cards ───── */
+.card{
+  background:var(--card);border-radius:20px;padding:22px;
+  margin-bottom:16px;box-shadow:0 3px 20px var(--sh);
+}
+.card-lbl{font-size:13px;font-weight:700;color:var(--pr);
+  margin-bottom:15px;display:flex;align-items:center;gap:7px}
+
+/* ───── Info Grid ───── */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld label{font-size:12px;font-weight:600;color:var(--mid)}
+.fld input,.fld select{
+  padding:11px 13px;border:1.5px solid var(--brd);border-radius:12px;
+  font-size:14px;font-family:'Vazirmatn',sans-serif;
+  outline:none;color:var(--txt);background:#fafcfb;
+  transition:border-color .25s,box-shadow .25s;text-align:right;
+}
+.fld input:focus,.fld select:focus{
+  border-color:var(--pr);box-shadow:0 0 0 3px rgba(43,97,85,.1)}
+
+/* ───── Instructions ───── */
+.instr{
+  background:rgba(43,97,85,.07);
+  border:1.5px solid rgba(43,97,85,.14);
+  border-radius:16px;padding:15px 17px;
+  margin-bottom:16px;font-size:13.5px;
+  color:var(--pr-d);line-height:1.95;
+}
+
+/* ───── Progress ───── */
+.prog-row{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.prog-track{
+  flex:1;height:7px;background:var(--brd);
+  border-radius:20px;overflow:hidden;
+}
+.prog-fill{
+  height:100%;background:linear-gradient(90deg,var(--pr),var(--pr-l));
+  border-radius:20px;width:0%;transition:width .4s ease;
+}
+.prog-txt{font-size:12px;font-weight:600;color:var(--lgt);white-space:nowrap}
+
+/* ───── Question Card ───── */
+.qcard{
+  background:var(--card);border:1.5px solid var(--brd);
+  border-radius:20px;padding:20px;margin-bottom:13px;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+  transition:border-color .3s,box-shadow .3s;
+  animation:fadeUp .4s ease backwards;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.qcard.done{border-color:rgba(109,172,151,.6);
+  box-shadow:0 4px 18px rgba(43,97,85,.1)}
+.qcard.err{border-color:var(--low-c);
+  box-shadow:0 4px 16px rgba(217,79,69,.15);
+  animation:shake .35s ease}
+@keyframes shake{
+  0%,100%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  75%{transform:translateX(5px)}
+}
+.q-row{display:flex;align-items:flex-start;gap:11px;margin-bottom:14px}
+.q-badge{
+  background:var(--pr);color:#fff;
+  min-width:28px;height:28px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;flex-shrink:0;
+  transition:background .3s;
+}
+.qcard.done .q-badge{background:var(--ac)}
+.q-txt{font-size:14.5px;color:var(--txt);line-height:1.8;
+  font-weight:500;padding-top:3px}
+
+/* ───── Options ───── */
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 15px;border:1.5px solid var(--brd);
+  border-radius:13px;cursor:pointer;
+  transition:all .2s;position:relative;overflow:hidden;
+}
+.opt:hover{border-color:var(--pr-l);background:rgba(43,97,85,.04)}
+.opt.sel{border-color:var(--pr);background:var(--pr)}
+.opt.sel .opt-txt{color:#fff}
+.opt-circle{
+  width:20px;height:20px;border-radius:50%;
+  border:2px solid var(--brd);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .22s;
+}
+.opt.sel .opt-circle{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.2)}
+.opt-dot{
+  width:10px;height:10px;border-radius:50%;
+  background:#fff;transform:scale(0);
+  transition:transform .22s;
+}
+.opt.sel .opt-dot{transform:scale(1)}
+.opt-txt{font-size:13.5px;color:var(--txt);font-weight:500;transition:color .2s}
+.opt-score{
+  margin-right:auto;font-size:11px;font-weight:700;
+  color:var(--lgt);transition:color .2s;
+}
+.opt.sel .opt-score{color:rgba(255,255,255,.65)}
+
+/* ───── Submit ───── */
+.sub-btn{
+  width:100%;padding:17px;margin-top:22px;
+  background:linear-gradient(135deg,var(--pr),var(--pr-d));
+  color:#fff;border:none;border-radius:18px;
+  font-size:16px;font-weight:700;
+  font-family:'Vazirmatn',sans-serif;cursor:pointer;
+  box-shadow:0 6px 24px rgba(43,97,85,.33);
+  transition:transform .2s,box-shadow .2s;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.sub-btn:hover{transform:translateY(-2px);
+  box-shadow:0 10px 30px rgba(43,97,85,.38)}
+.sub-btn:active{transform:translateY(0)}
+
+/* ───── Result ───── */
+.result-page{display:none}
+.res-hero{
+  background:linear-gradient(140deg,var(--pr),var(--pr-d));
+  border-radius:26px;padding:36px 24px 30px;
+  text-align:center;margin-bottom:18px;
+  position:relative;overflow:hidden;
+  box-shadow:0 8px 32px rgba(27,62,55,.28);
+}
+.res-hero::before{content:'';position:absolute;
+  top:-40px;left:-40px;width:180px;height:180px;
+  border-radius:50%;background:rgba(255,255,255,.06)}
+.res-emoji{
+  font-size:54px;display:block;margin-bottom:10px;
+  position:relative;z-index:1;
+  animation:pop .55s cubic-bezier(.34,1.56,.64,1) both;
+}
+@keyframes pop{from{transform:scale(0)}to{transform:scale(1)}}
+.res-sub{font-size:13px;color:rgba(255,255,255,.65);
+  position:relative;z-index:1;margin-bottom:8px}
+.res-num{
+  font-size:76px;font-weight:800;color:#fff;
+  line-height:1;position:relative;z-index:1;
+}
+.res-of{font-size:22px;color:rgba(255,255,255,.55)}
+.res-pill{
+  display:inline-block;padding:8px 26px;
+  border-radius:50px;font-size:16px;font-weight:700;
+  margin-top:16px;position:relative;z-index:1;
+}
+.p-low{background:rgba(217,79,69,.28);color:#ffb0ab}
+.p-med{background:rgba(204,122,42,.28);color:#ffd9a8}
+.p-hi {background:rgba(58,153,104,.28);color:#a8ffd3}
+
+/* ───── Result Bar ───── */
+.bar-card{background:var(--card);border-radius:20px;
+  padding:22px;margin-bottom:15px;
+  box-shadow:0 3px 20px var(--sh)}
+.bar-labels{display:flex;justify-content:space-between;
+  font-size:12px;color:var(--lgt);margin-bottom:9px}
+.bar-track{height:13px;background:var(--brd);
+  border-radius:10px;overflow:hidden}
+.bar-fill{height:100%;border-radius:10px;
+  width:0%;transition:width 1.2s cubic-bezier(.4,0,.2,1)}
+.fill-low{background:linear-gradient(90deg,#f4a09c,var(--low-c))}
+.fill-med{background:linear-gradient(90deg,#f5c48a,var(--ac))}
+.fill-hi {background:linear-gradient(90deg,#8dd5b4,var(--hi-c))}
+.bar-marks{display:flex;justify-content:space-between;
+  margin-top:7px;font-size:11px;color:var(--lgt)}
+
+/* ───── Desc ───── */
+.desc-card{background:var(--card);border-radius:20px;
+  padding:22px;margin-bottom:15px;
+  box-shadow:0 3px 20px var(--sh)}
+.desc-lbl{font-size:13px;font-weight:700;color:var(--pr);
+  margin-bottom:11px;display:flex;align-items:center;gap:6px}
+.desc-txt{font-size:14px;color:var(--mid);line-height:2.05}
+
+/* ───── Status ───── */
+.status{border-radius:14px;padding:13px 17px;
+  font-size:13px;margin-bottom:14px;display:none}
+.status.show{display:block}
+.status.ok{background:var(--hi-b);color:var(--hi-c)}
+.status.er{background:var(--low-b);color:var(--low-c)}
+
+.reset-btn{
+  width:100%;padding:15px;
+  background:var(--card);color:var(--pr);
+  border:2px solid var(--brd);border-radius:16px;
+  font-size:15px;font-weight:600;
+  font-family:'Vazirmatn',sans-serif;cursor:pointer;
+  transition:all .2s;
+}
+.reset-btn:hover{border-color:var(--pr);
+  background:rgba(43,97,85,.05)}
+
+/* ───── Score detail ───── */
+.scores-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+  margin-bottom:15px;
+}
+.score-cell{
+  background:var(--card);border-radius:13px;
+  padding:10px 6px;text-align:center;
+  box-shadow:0 2px 10px rgba(0,0,0,.04);
+  border:1.5px solid var(--brd);
+}
+.sc-q{font-size:11px;color:var(--lgt);margin-bottom:4px}
+.sc-v{font-size:18px;font-weight:800;color:var(--pr)}
+
+@media(max-width:480px){
+  .info-grid{grid-template-columns:1fr}
+  .scores-grid{grid-template-columns:repeat(3,1fr)}
+  .res-num{font-size:58px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-dots"></div>
+<div class="bg-orb bg-orb1"></div>
+<div class="bg-orb bg-orb2"></div>
+
+<div class="wrap">
+
+  <!-- ════════════ FORM PAGE ════════════ -->
+  <div id="formPage">
+
+    <div class="hdr">
+      <span class="hdr-icon">🌿</span>
+      <div class="hdr-title">آزمون عزت نفس</div>
+      <div class="hdr-sub">این آزمون به شما کمک می‌کند سطح عزت نفس خود را بهتر بشناسید</div>
+      <div class="hdr-pills">
+        <div class="hdr-pill"><div class="pill-n">۱۲</div><div class="pill-l">سوال</div></div>
+        <div class="hdr-pill"><div class="pill-n">۵</div><div class="pill-l">دقیقه</div></div>
+        <div class="hdr-pill"><div class="pill-n">۴</div><div class="pill-l">گزینه</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-lbl">👤 اطلاعات شخصی
+        <span style="font-weight:400;color:var(--lgt);font-size:12px">(اختیاری)</span>
+      </div>
+      <div class="info-grid">
+        <div class="fld">
+          <label>نام و نام‌خانوادگی</label>
+          <input type="text" id="f_name" placeholder="اختیاری">
+        </div>
+        <div class="fld">
+          <label>سن</label>
+          <input type="number" id="f_age" placeholder="مثلاً ۲۵" min="10" max="100">
+        </div>
+        <div class="fld">
+          <label>جنسیت</label>
+          <select id="f_gender">
+            <option value="">انتخاب کنید</option>
+            <option value="مرد">مرد</option>
+            <option value="زن">زن</option>
+            <option value="ترجیح می‌دهم نگویم">ترجیح می‌دهم نگویم</option>
+          </select>
+        </div>
+        <div class="fld">
+          <label>تحصیلات</label>
+          <select id="f_edu">
+            <option value="">انتخاب کنید</option>
+            <option value="زیر دیپلم">زیر دیپلم</option>
+            <option value="دیپلم">دیپلم</option>
+            <option value="کاردانی">کاردانی</option>
+            <option value="کارشناسی">کارشناسی</option>
+            <option value="کارشناسی ارشد">کارشناسی ارشد</option>
+            <option value="دکتری و بالاتر">دکتری و بالاتر</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="instr">
+      📌 <strong>راهنما:</strong> دوازده جمله زیر درباره احساس شما نسبت به خودتان است.
+      برای هر جمله گزینه‌ای را انتخاب کنید که بهترین توصیف حال شما باشد.
+      پاسخ درست یا غلطی وجود ندارد — صادقانه پاسخ دهید.
+    </div>
+
+    <div class="prog-row">
+      <div class="prog-track">
+        <div class="prog-fill" id="progFill"></div>
+      </div>
+      <div class="prog-txt" id="progTxt">۰ از ۱۲</div>
+    </div>
+
+    <div id="qBox"></div>
+
+    <button class="sub-btn" onclick="handleSubmit()">
+      <span>ثبت و مشاهده نتیجه</span><span>←</span>
+    </button>
+
+  </div>
+
+  <!-- ════════════ RESULT PAGE ════════════ -->
+  <div class="result-page" id="resultPage">
+
+    <div class="res-hero">
+      <span class="res-emoji" id="r_emoji">🌟</span>
+      <div class="res-sub">نمره عزت نفس شما</div>
+      <div class="res-num">
+        <span id="r_score">0</span>
+        <span class="res-of">/ ۴۸</span>
+      </div>
+      <div class="res-pill" id="r_pill">—</div>
+    </div>
+
+    <div class="bar-card">
+      <div class="bar-labels">
+        <span>پایین &nbsp;(۱۲–۲۴)</span>
+        <span>متوسط &nbsp;(۲۵–۳۶)</span>
+        <span>(۳۷–۴۸)&nbsp; بالا</span>
+      </div>
+      <div class="bar-track">
+        <div class="bar-fill" id="r_fill"></div>
+      </div>
+      <div class="bar-marks">
+        <span>۱۲</span><span>۲۰</span><span>۲۸</span><span>۳۶</span><span>۴۸</span>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:15px">
+      <div class="card-lbl">📊 نمره هر سوال</div>
+      <div class="scores-grid" id="scoresGrid"></div>
+    </div>
+
+    <div class="desc-card">
+      <div class="desc-lbl">📖 تفسیر نتیجه</div>
+      <div class="desc-txt" id="r_desc">—</div>
+    </div>
+
+    <div class="status" id="statusEl"></div>
+
+    <button class="reset-btn" onclick="resetTest()">🔄 شروع مجدد آزمون</button>
+
+  </div>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhEZaA1kQFxDpxe9eqFl6rmbKgt8ZbPqSQTXWOBBKgppTx-6gfSiIozLdHcQLJHUw/exec";
+const SHEET = "آزمون عزت نفس";
+
+/* ── Data ── */
+const Qs = [
+  {t:"احساس می‌کنم فرد ارزشمندی هستم و دست‌کمی از دیگران ندارم.",rev:false},
+  {t:"به طور کلی فکر می‌کنم خیلی ویژگی‌های خوبی دارم.",rev:false},
+  {t:"می‌توانم کارها را به خوبی دیگران انجام دهم.",rev:false},
+  {t:"نسبت به خودم احساس مثبت و خوبی دارم.",rev:false},
+  {t:"به طور کلی از خودم راضی هستم.",rev:false},
+  {t:"در مجموع احساس می‌کنم شخص موفقی هستم.",rev:false},
+  {t:"احساس می‌کنم چیزهای زیادی برای افتخار کردن ندارم.",rev:true},
+  {t:"گاهی اوقات احساس بی‌فایدگی می‌کنم.",rev:true},
+  {t:"آرزو می‌کنم بیشتر به خودم احترام می‌گذاشتم.",rev:true},
+  {t:"گاهی فکر می‌کنم اصلاً به درد بخور نیستم.",rev:true},
+  {t:"احساس می‌کنم چیز خاصی برای ارائه به دیگران ندارم.",rev:true},
+  {t:"در مواجهه با مشکلات، توانایی خودم را باور دارم.",rev:false},
+];
+const OPTS=[
+  {l:"کاملاً موافقم",v:4},
+  {l:"موافقم",v:3},
+  {l:"مخالفم",v:2},
+  {l:"کاملاً مخالفم",v:1},
+];
+const toP=n=>n.toString().replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+let ans=new Array(Qs.length).fill(null);
+
+/* ── Build Questions ── */
+const qBox=document.getElementById("qBox");
+Qs.forEach((q,qi)=>{
+  const card=document.createElement("div");
+  card.className="qcard";
+  card.id="qc"+qi;
+  card.style.animationDelay=(qi*.04)+"s";
+
+  const optHtml=OPTS.map((o,oi)=>`
+    <div class="opt" id="opt${qi}_${oi}" onclick="pick(${qi},${oi},${o.v})">
+      <div class="opt-circle"><div class="opt-dot"></div></div>
+      <div class="opt-txt">${o.l}</div>
+      <div class="opt-score">${toP(o.v)}</div>
+    </div>`).join("");
+
+  card.innerHTML=`
+    <div class="q-row">
+      <div class="q-badge" id="qb${qi}">${toP(qi+1)}</div>
+      <div class="q-txt">${q.t}</div>
+    </div>
+    <div class="opts">${optHtml}</div>`;
+  qBox.appendChild(card);
+});
+
+/* ── Pick Option ── */
+function pick(qi,oi,val){
+  OPTS.forEach((_,i)=>document.getElementById(`opt${qi}_${i}`).classList.remove("sel"));
+  document.getElementById(`opt${qi}_${oi}`).classList.add("sel");
+  const wasNull=ans[qi]===null;
+  ans[qi]={raw:val,oi};
+  const card=document.getElementById("qc"+qi);
+  card.classList.add("done");
+  card.classList.remove("err");
+  updProg();
+  if(wasNull){
+    setTimeout(()=>{
+      const next=ans.findIndex((a,i)=>i>qi&&a===null);
+      if(next!==-1) document.getElementById("qc"+next)
+        .scrollIntoView({behavior:"smooth",block:"center"});
+    },280);
+  }
+}
+
+/* ── Progress ── */
+function updProg(){
+  const done=ans.filter(a=>a!==null).length;
+  document.getElementById("progFill").style.width=(done/Qs.length*100)+"%";
+  document.getElementById("progTxt").textContent=toP(done)+" از "+toP(Qs.length);
+}
+
+/* ── Submit ── */
+function handleSubmit(){
+  let bad=false,firstBad=-1;
+  Qs.forEach((_,qi)=>{
+    const c=document.getElementById("qc"+qi);
+    if(ans[qi]===null){c.classList.add("err");bad=true;if(firstBad<0)firstBad=qi;}
+  });
+  if(bad){
+    alert("⚠️ لطفاً به تمام سوالات پاسخ دهید.");
+    document.getElementById("qc"+firstBad).scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  let total=0;
+  const scores=ans.map((a,qi)=>{
+    const s=Qs[qi].rev?(5-a.raw):a.raw;
+    total+=s;return s;
+  });
+  showResult(total,scores);
+}
+
+/* ── Show Result ── */
+function showResult(total,scores){
+  document.getElementById("formPage").style.display="none";
+  const rp=document.getElementById("resultPage");
+  rp.style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+
+  document.getElementById("r_score").textContent=toP(total);
+
+  let emoji,level,pillCls,fillCls,desc;
+  if(total<=24){
+    emoji="🌱";level="عزت نفس پایین";pillCls="p-low";fillCls="fill-low";
+    desc="نمره شما نشان‌دهنده سطح پایینی از عزت نفس است. افراد با عزت نفس پایین ممکن است در ارزیابی توانایی‌هایشان دچار تردید شوند و احساس کنند کمتر از دیگران ارزش دارند. این وضعیت کاملاً قابل بهبود است. مشاوره با یک متخصص روانشناس می‌تواند گام مؤثری در این مسیر باشد.";
+  } else if(total<=36){
+    emoji="⛅";level="عزت نفس متوسط";pillCls="p-med";fillCls="fill-med";
+    desc="نمره شما در محدوده متوسط قرار دارد. شما دارای نقاط قوت مثبتی هستید اما در برخی موقعیت‌ها ممکن است نسبت به خود احساس تردید داشته باشید. با توجه به جنبه‌های مثبت خود و تمرین مهارت‌های خودپذیری، می‌توانید عزت نفس‌تان را تقویت کنید.";
+  } else {
+    emoji="🌟";level="عزت نفس بالا";pillCls="p-hi";fillCls="fill-hi";
+    desc="عالی! نمره شما نشان می‌دهد از عزت نفس بالایی برخوردارید. شما به توانایی‌هایتان اعتماد دارید، ارزش خود را می‌شناسید و می‌توانید با چالش‌های زندگی به شکل سازنده روبرو شوید. این ویژگی دارایی ارزشمندی در زندگی شخصی و اجتماعی شما است.";
+  }
+
+  document.getElementById("r_emoji").textContent=emoji;
+  const pill=document.getElementById("r_pill");
+  pill.textContent=level;pill.className="res-pill "+pillCls;
+  document.getElementById("r_desc").textContent=desc;
+
+  const fill=document.getElementById("r_fill");
+  fill.className="bar-fill "+fillCls;
+  setTimeout(()=>{fill.style.width=((total-12)/36*100)+"%"},350);
+
+  // scores grid
+  const grid=document.getElementById("scoresGrid");
+  grid.innerHTML=scores.map((s,i)=>`
+    <div class="score-cell">
+      <div class="sc-q">سوال ${toP(i+1)}</div>
+      <div class="sc-v">${toP(s)}</div>
+    </div>`).join("");
+
+  saveData(total,level,scores);
+}
+
+/* ── Save to Sheet ── */
+function saveData(total,level,scores){
+  const now=new Date();
+  const dateFa=now.toLocaleDateString("fa-IR")+" ساعت "+now.toLocaleTimeString("fa-IR");
+  const payload={sheetName:SHEET,data:{}};
+  payload.data["تاریخ و زمان"]=dateFa;
+  payload.data["نام"]=document.getElementById("f_name").value||"ناشناس";
+  payload.data["سن"]=document.getElementById("f_age").value||"-";
+  payload.data["جنسیت"]=document.getElementById("f_gender").value||"-";
+  payload.data["تحصیلات"]=document.getElementById("f_edu").value||"-";
+  scores.forEach((s,i)=>{payload.data[`سوال ${i+1}`]=s;});
+  payload.data["نمره کل"]=total;
+  payload.data["سطح عزت نفس"]=level;
+
+  const el=document.getElementById("statusEl");
+  const url=SCRIPT_URL+"?payload="+encodeURIComponent(JSON.stringify(payload));
+  fetch(url,{mode:"no-cors"})
+  .then(()=>{
+    el.textContent="✅ نتایج با موفقیت در Google Sheet ذخیره شد.";
+    el.className="status show ok";
+  }).catch(()=>{
+    el.textContent="⚠️ خطا در ذخیره داده. اتصال اینترنت را بررسی کنید.";
+    el.className="status show er";
+  });
+}
+
+/* ── Reset ── */
+function resetTest(){
+  ans=new Array(Qs.length).fill(null);
+  Qs.forEach((_,qi)=>{
+    document.getElementById("qc"+qi).classList.remove("done","err");
+    OPTS.forEach((_,oi)=>document.getElementById(`opt${qi}_${oi}`).classList.remove("sel"));
+  });
+  ["f_name","f_age"].forEach(id=>document.getElementById(id).value="");
+  ["f_gender","f_edu"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("r_fill").style.width="0";
+  document.getElementById("statusEl").className="status";
+  updProg();
+  document.getElementById("resultPage").style.display="none";
+  document.getElementById("formPage").style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+</body>
+</html>
