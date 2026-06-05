@@ -3,55 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>آزمون‌های روانشناسی</title>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>آزمون‌های روانشناختی</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Vazirmatn',sans-serif;background:#f0f1fa;
-  min-height:100vh;display:flex;align-items:center;
-  justify-content:center;padding:20px}
-.box{max-width:500px;width:100%}
-.hdr{background:linear-gradient(140deg,#2d3a8c,#1a2260);border-radius:22px;
-  padding:30px 24px;text-align:center;margin-bottom:16px;
-  box-shadow:0 8px 28px rgba(26,34,96,.25)}
-.hdr h1{font-size:22px;font-weight:800;color:#fff;margin-bottom:6px}
-.hdr p{font-size:13px;color:rgba(255,255,255,.7)}
-.test-card{display:flex;align-items:center;gap:14px;
-  background:#fff;border-radius:16px;padding:18px 20px;
-  margin-bottom:12px;text-decoration:none;color:inherit;
-  box-shadow:0 3px 14px rgba(45,58,140,.1);
-  transition:transform .2s,box-shadow .2s}
-.test-card:hover{transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(45,58,140,.18)}
-.tc-icon{font-size:30px;flex-shrink:0}
-.tc-info{flex:1}
-.tc-title{font-size:15px;font-weight:700;color:#1a1f4a;margin-bottom:3px}
-.tc-desc{font-size:12px;color:#9498c0}
-.tc-arrow{font-size:20px;color:#6875d4}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Vazirmatn',sans-serif;background:#f4f7f6;min-height:100vh;color:#333}
+.hdr{background:linear-gradient(135deg,#1A9E8F 0%,#0d7a6d 100%);color:#fff;text-align:center;padding:40px 16px 30px}
+.hdr h1{font-size:1.5rem;font-weight:700;margin-bottom:8px}
+.hdr p{font-size:.88rem;opacity:.85}
+.wrap{max-width:540px;margin:0 auto;padding:28px 16px 60px}
+.sec-title{font-size:.75rem;font-weight:700;color:#aaa;letter-spacing:.08em;margin-bottom:14px;padding-right:4px}
+.tests{display:flex;flex-direction:column;gap:12px}
+.test-card{background:#fff;border-radius:16px;padding:18px 20px;box-shadow:0 2px 14px rgba(0,0,0,.07);display:flex;align-items:center;gap:16px;text-decoration:none;color:#333;transition:transform .18s,box-shadow .18s;border:1.5px solid transparent}
+.test-card:hover{transform:translateY(-2px);box-shadow:0 6px 22px rgba(26,158,143,.15);border-color:#1A9E8F}
+.test-emoji{font-size:2rem;flex-shrink:0;width:44px;text-align:center}
+.test-info{flex:1}
+.test-name{font-size:.97rem;font-weight:700;margin-bottom:3px}
+.test-sub{font-size:.76rem;color:#999}
+.arrow{color:#ccc;font-size:1.1rem;flex-shrink:0}
 </style>
 </head>
 <body>
-<div class="box">
-  <div class="hdr">
-    <h1>🧠 آزمون‌های روانشناسی</h1>
-    <p>آزمون مورد نظر خود را انتخاب کنید</p>
+<div class="hdr">
+  <h1>&#x1F9E0; آزمون‌های روانشناختی</h1>
+  <p>ابزارهای خودشناسی برای رشد فردی</p>
+</div>
+<div class="wrap">
+  <div class="sec-title">آزمون‌های موجود</div>
+  <div class="tests">
+    <a class="test-card" href="azmon-ezat-nafs.html">
+      <div class="test-emoji">&#x1F33F;</div>
+      <div class="test-info">
+        <div class="test-name">آزمون عزت نفس</div>
+        <div class="test-sub">خودارزیابی &middot; ۷ سوال</div>
+      </div>
+      <div class="arrow">&#x2039;</div>
+    </a>
+    <a class="test-card" href="azmon-tars-az-ghazavat.html">
+      <div class="test-emoji">&#x1FA9E;</div>
+      <div class="test-info">
+        <div class="test-name">آزمون ترس از قضاوت</div>
+        <div class="test-sub">خودارزیابی &middot; ۷ سوال</div>
+      </div>
+      <div class="arrow">&#x2039;</div>
+    </a>
+    <a class="test-card" href="azmon-tars-az-tard-shodan.html">
+      <div class="test-emoji">&#x1F499;</div>
+      <div class="test-info">
+        <div class="test-name">آزمون ترس از طرد شدن</div>
+        <div class="test-sub">خودارزیابی &middot; ۷ سوال</div>
+      </div>
+      <div class="arrow">&#x2039;</div>
+    </a>
   </div>
-  <a class="test-card" href="azmon-ezat-nafs.html">
-    <span class="tc-icon">🌿</span>
-    <div class="tc-info">
-      <div class="tc-title">آزمون عزت نفس</div>
-      <div class="tc-desc">۱۲ سوال — لیکرت ۴ درجه‌ای</div>
-    </div>
-    <span class="tc-arrow">←</span>
-  </a>
-  <a class="test-card" href="azmon-tars-az-ghazavat.html">
-    <span class="tc-icon">🪞</span>
-    <div class="tc-info">
-      <div class="tc-title">آزمون ترس از قضاوت</div>
-      <div class="tc-desc">۴ سوال — لیکرت ۵ درجه‌ای</div>
-    </div>
-    <span class="tc-arrow">←</span>
-  </a>
 </div>
 </body>
 </html>
