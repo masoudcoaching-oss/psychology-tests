@@ -52,15 +52,15 @@ body{font-family:'Vazirmatn',sans-serif;background:#eef5f4;min-height:100vh;colo
 <div class="wrap">
 
   <div id="sw" class="card">
-    <div class="ttl">&#x2728; خوش آمدید</div>
+    <div class="ttl">✨ خوش آمدید</div>
     <div class="bodytxt">این یک آزمون خودیاری است و هیچ ارزش درمانی ندارد. پس خود را قضاوت نکنید و با شفقت کامل نسبت به خود در این آزمون شرکت کنید.</div>
-    <div class="badge">&#x1F4CB; ۷ سوال &nbsp;|&nbsp; &#x23F1; حدود ۳ دقیقه</div>
+    <div class="badge">📋 ۷ سوال &nbsp;|&nbsp; ⏱ حدود ۳ دقیقه</div>
     <br>
     <button class="btn" onclick="goStage('si')">شروع آزمون</button>
   </div>
 
   <div id="si" class="card hidden">
-    <div class="ttl">&#x1F464; اطلاعات شخصی</div>
+    <div class="ttl">👤 اطلاعات شخصی</div>
     <label class="lbl" for="fname">نام و نام خانوادگی</label>
     <input class="inp" type="text" id="fname" placeholder="مثال: زهرا احمدی">
     <button class="btn" onclick="startQ()">بعدی</button>
@@ -85,149 +85,118 @@ body{font-family:'Vazirmatn',sans-serif;background:#eef5f4;min-height:100vh;colo
     <div class="rl" id="rl"></div>
     <div class="rs" id="rs"></div>
     <div class="rd" id="rd"></div>
-    <div class="okbox">&#x2705; اطلاعات آزمون شما به‌درستی ثبت شد</div>
+    <div class="okbox">✅ اطلاعات آزمون شما به‌درستی ثبت شد</div>
   </div>
 
 </div>
 
 <script>
-var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhEZaA1kQFxDpxe9eqFl6rmbKgt8ZbPqSQTXWOBBKgppTx-6gfSiIozLdHcQLJHUw/exec";
-var SHEET = "azmon-tars-az-tard-shodan";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhEZaA1kQFxDpxe9eqFl6rmbKgt8ZbPqSQTXWOBBKgppTx-6gfSiIozLdHcQLJHUw/exec";
+const SHEET = "آزمون ترس از طرد شدن";
 
-var QUESTIONS = [
-  "\u0648\u0642\u062a\u06cc \u0645\u06cc\u200c\u062e\u0648\u0627\u0647\u0645 \u0627\u0632 \u06a9\u0633\u06cc \u0686\u06cc\u0632\u06cc \u0628\u062e\u0648\u0627\u0647\u0645\u060c \u0646\u06af\u0631\u0627\u0646 \u00ab\u0646\u0647\u00bb \u0634\u0646\u06cc\u062f\u0646 \u0647\u0633\u062a\u0645.",
-  "\u0627\u0632 \u0628\u06cc\u0627\u0646 \u0627\u062d\u0633\u0627\u0633\u0627\u062a \u0648\u0627\u0642\u0639\u06cc\u200c\u0627\u0645 \u0645\u06cc\u200c\u062a\u0631\u0633\u0645 \u0686\u0648\u0646 \u0645\u0645\u06a9\u0646 \u0627\u0633\u062a \u062f\u06cc\u06af\u0631\u0627\u0646 \u0645\u0631\u0627 \u0646\u067e\u0630\u06cc\u0631\u0646\u062f.",
-  "\u0628\u0631\u0627\u06cc \u062c\u0644\u0628 \u062a\u0623\u06cc\u06cc\u062f \u062f\u06cc\u06af\u0631\u0627\u0646\u060c \u06af\u0627\u0647\u06cc \u0646\u0638\u0631 \u0648\u0627\u0642\u0639\u06cc\u200c\u0627\u0645 \u0631\u0627 \u067e\u0646\u0647\u0627\u0646 \u0645\u06cc\u200c\u06a9\u0646\u0645.",
-  "\u0648\u0642\u062a\u06cc \u06a9\u0633\u06cc \u0628\u0627 \u0645\u0646 \u0645\u062e\u0627\u0644\u0641\u062a \u0645\u06cc\u200c\u06a9\u0646\u062f\u060c \u0627\u062d\u0633\u0627\u0633 \u0645\u06cc\u200c\u06a9\u0646\u0645 \u06a9\u0647 \u0645\u0631\u0627 \u0631\u062f \u06a9\u0631\u062f\u0647 \u0627\u0633\u062a.",
-  "\u0627\u0632 \u0634\u0631\u0648\u0639 \u0631\u0648\u0627\u0628\u0637 \u062c\u062f\u06cc\u062f \u0627\u062c\u062a\u0646\u0627\u0628 \u0645\u06cc\u200c\u06a9\u0646\u0645 \u0686\u0648\u0646 \u0645\u06cc\u200c\u062a\u0631\u0633\u0645 \u062f\u0631 \u0646\u0647\u0627\u06cc\u062a \u0637\u0631\u062f \u0634\u0648\u0645.",
-  "\u0627\u06af\u0631 \u06a9\u0633\u06cc \u0648\u0642\u062a \u06a9\u0627\u0641\u06cc \u0628\u0631\u0627\u06cc\u0645 \u0646\u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u062f\u060c \u0641\u06a9\u0631 \u0645\u06cc\u200c\u06a9\u0646\u0645 \u062f\u06cc\u06af\u0631 \u062f\u0648\u0633\u062a\u0645 \u0646\u062f\u0627\u0631\u062f.",
-  "\u0628\u0631\u0627\u06cc \u067e\u0630\u06cc\u0631\u0641\u062a\u0647 \u0634\u062f\u0646\u060c \u0646\u06cc\u0627\u0632\u0647\u0627 \u0648 \u062e\u0648\u0627\u0633\u062a\u0647\u200c\u0647\u0627\u06cc\u0645 \u0631\u0627 \u0641\u062f\u0627 \u0645\u06cc\u200c\u06a9\u0646\u0645."
+const QUESTIONS = [
+  "وقتی می‌خواهم از کسی چیزی بخواهم، نگران «نه» شنیدن هستم.",
+  "از بیان احساسات واقعی‌ام می‌ترسم چون ممکن است دیگران مرا نپذیرند.",
+  "برای جلب تأیید دیگران، گاهی نظر واقعی‌ام را پنهان می‌کنم.",
+  "وقتی کسی با من مخالفت می‌کند، احساس می‌کنم که مرا رد کرده است.",
+  "از شروع روابط جدید اجتناب می‌کنم چون می‌ترسم در نهایت طرد شوم.",
+  "اگر کسی وقت کافی برایم نداشته باشد، فکر می‌کنم دیگر دوستم ندارد.",
+  "برای پذیرفته شدن، نیازها و خواسته‌هایم را فدا می‌کنم."
 ];
 
-var OPTIONS = [
-  {label: "\u0627\u0635\u0644\u0627\u064b", value: 1},
-  {label: "\u0628\u0647\u200c\u0646\u062f\u0631\u062a", value: 2},
-  {label: "\u06af\u0627\u0647\u06cc", value: 3},
-  {label: "\u0627\u063a\u0644\u0628", value: 4},
-  {label: "\u0647\u0645\u06cc\u0634\u0647", value: 5}
+const OPTIONS = [
+  {label:"اصلاً", value:1},
+  {label:"به‌ندرت", value:2},
+  {label:"گاهی", value:3},
+  {label:"اغلب", value:4},
+  {label:"همیشه", value:5}
 ];
 
-var LEVELS = [
-  {
-    min: 7, max: 14,
-    icon: "\uD83C\uDF3F",
-    label: "\u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u067e\u0627\u06cc\u06cc\u0646",
-    desc: "\u0633\u0637\u062d \u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u062f\u0631 \u0634\u0645\u0627 \u067e\u0627\u06cc\u06cc\u0646 \u0627\u0633\u062a. \u0628\u0647\u200c\u0637\u0648\u0631 \u06a9\u0644\u06cc \u062f\u0631 \u0631\u0648\u0627\u0628\u0637\u062a\u0627\u0646 \u0627\u062d\u0633\u0627\u0633 \u0627\u0645\u0646\u06cc\u062a \u0645\u06cc\u200c\u06a9\u0646\u06cc\u062f \u0648 \u0646\u06af\u0631\u0627\u0646\u06cc \u0686\u0646\u062f\u0627\u0646\u06cc \u0628\u0631\u0627\u06cc \u0637\u0631\u062f \u0634\u062f\u0646 \u0646\u062f\u0627\u0631\u06cc\u062f. \u0627\u06cc\u0646 \u0648\u06cc\u0698\u06af\u06cc \u0628\u0647 \u0634\u0645\u0627 \u06a9\u0645\u06a9 \u0645\u06cc\u200c\u06a9\u0646\u062f \u0631\u0648\u0627\u0628\u0637\u06cc \u0635\u0627\u062f\u0642\u0627\u0646\u0647\u200c\u062a\u0631 \u0648 \u0622\u0632\u0627\u062f\u0627\u0646\u0647\u200c\u062a\u0631 \u062f\u0627\u0634\u062a\u0647 \u0628\u0627\u0634\u06cc\u062f."
-  },
-  {
-    min: 15, max: 21,
-    icon: "\uD83C\uDF3B",
-    label: "\u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u0645\u062a\u0648\u0633\u0637",
-    desc: "\u0633\u0637\u062d \u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u062f\u0631 \u0634\u0645\u0627 \u0645\u062a\u0648\u0633\u0637 \u0627\u0633\u062a. \u06af\u0627\u0647\u06cc \u0646\u06af\u0631\u0627\u0646\u06cc\u200c\u0647\u0627\u06cc\u06cc \u062f\u0631\u0628\u0627\u0631\u0647 \u067e\u0630\u06cc\u0631\u0641\u062a\u0647 \u0634\u062f\u0646 \u062f\u0627\u0631\u06cc\u062f\u060c \u0627\u0645\u0627 \u0627\u06cc\u0646 \u0646\u06af\u0631\u0627\u0646\u06cc\u200c\u0647\u0627 \u0632\u0646\u062f\u06af\u06cc \u0631\u0648\u0632\u0645\u0631\u0647\u200c\u062a\u0627\u0646 \u0631\u0627 \u0628\u0647\u200c\u0637\u0648\u0631 \u062c\u062f\u06cc \u062a\u062d\u062a\u200c\u062a\u0623\u062b\u06cc\u0631 \u0642\u0631\u0627\u0631 \u0646\u0645\u06cc\u200c\u062f\u0647\u062f. \u062a\u0648\u062c\u0647 \u0628\u0647 \u0645\u0631\u0632\u0647\u0627\u06cc \u0633\u0627\u0644\u0645 \u062f\u0631 \u0631\u0648\u0627\u0628\u0637 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u0645\u0641\u06cc\u062f \u0628\u0627\u0634\u062f."
-  },
-  {
-    min: 22, max: 28,
-    icon: "\uD83C\uDF0A",
-    label: "\u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u0646\u0633\u0628\u062a\u0627\u064b \u0628\u0627\u0644\u0627",
-    desc: "\u0633\u0637\u062d \u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u062f\u0631 \u0634\u0645\u0627 \u0646\u0633\u0628\u062a\u0627\u064b \u0628\u0627\u0644\u0627\u0633\u062a. \u0627\u06cc\u0646 \u062a\u0631\u0633 \u0645\u0645\u06a9\u0646 \u0627\u0633\u062a \u06af\u0627\u0647\u06cc \u0634\u0645\u0627 \u0631\u0627 \u0627\u0632 \u0628\u06cc\u0627\u0646 \u0646\u06cc\u0627\u0632\u0647\u0627 \u0648 \u0627\u062d\u0633\u0627\u0633\u0627\u062a \u0648\u0627\u0642\u0639\u06cc\u200c\u062a\u0627\u0646 \u0628\u0627\u0632 \u062f\u0627\u0631\u062f. \u062a\u0645\u0631\u06cc\u0646 \u0634\u0641\u0642\u062a \u0628\u0647 \u062e\u0648\u062f \u0648 \u06a9\u0627\u0631 \u0631\u0648\u06cc \u0639\u0632\u062a \u0646\u0641\u0633 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646\u062f \u062f\u0631 \u06a9\u0627\u0647\u0634 \u0627\u06cc\u0646 \u0627\u0636\u0637\u0631\u0627\u0628 \u06a9\u0645\u06a9\u200c\u06a9\u0646\u0646\u062f\u0647 \u0628\u0627\u0634\u062f."
-  },
-  {
-    min: 29, max: 35,
-    icon: "\uD83D\uDC99",
-    label: "\u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u0628\u0627\u0644\u0627",
-    desc: "\u0633\u0637\u062d \u062a\u0631\u0633 \u0627\u0632 \u0637\u0631\u062f \u0634\u062f\u0646 \u062f\u0631 \u0634\u0645\u0627 \u0628\u0627\u0644\u0627\u0633\u062a. \u0627\u06cc\u0646 \u062a\u0631\u0633 \u0645\u0645\u06a9\u0646 \u0627\u0633\u062a \u0628\u0647\u200c\u0637\u0648\u0631 \u0642\u0627\u0628\u0644\u200c\u062a\u0648\u062c\u0647\u06cc \u0628\u0631 \u0631\u0648\u0627\u0628\u0637 \u0648 \u062a\u0635\u0645\u06cc\u0645\u200c\u06af\u06cc\u0631\u06cc\u200c\u0647\u0627\u06cc\u062a\u0627\u0646 \u062a\u0623\u062b\u06cc\u0631 \u0628\u06af\u0630\u0627\u0631\u062f. \u0628\u0627 \u0634\u0641\u0642\u062a \u0628\u0647 \u062e\u0648\u062f \u0628\u062f\u0627\u0646\u06cc\u062f \u06a9\u0647 \u0627\u06cc\u0646 \u0627\u062d\u0633\u0627\u0633 \u0628\u062e\u0634\u06cc \u0627\u0632 \u062a\u062c\u0631\u0628\u0647 \u0627\u0646\u0633\u0627\u0646\u06cc \u0627\u0633\u062a \u0648 \u0628\u0627 \u0622\u06af\u0627\u0647\u06cc \u0648 \u062a\u0645\u0631\u06cc\u0646 \u0645\u06cc\u200c\u062a\u0648\u0627\u0646 \u0622\u0646 \u0631\u0627 \u06a9\u0627\u0647\u0634 \u062f\u0627\u062f."
-  }
+const LEVELS = [
+  {min:7,  max:14, icon:"🌿", label:"ترس از طرد شدن پایین",
+   desc:"سطح ترس از طرد شدن در شما پایین است. به‌طور کلی در روابطتان احساس امنیت می‌کنید و نگرانی چندانی برای طرد شدن ندارید. این ویژگی به شما کمک می‌کند روابطی صادقانه‌تر و آزادانه‌تر داشته باشید."},
+  {min:15, max:21, icon:"🌻", label:"ترس از طرد شدن متوسط",
+   desc:"سطح ترس از طرد شدن در شما متوسط است. گاهی نگرانی‌هایی درباره پذیرفته شدن دارید، اما زندگی روزمره‌تان را به‌طور جدی تحت‌تأثیر قرار نمی‌دهد. توجه به مرزهای سالم در روابط می‌تواند مفید باشد."},
+  {min:22, max:28, icon:"🌊", label:"ترس از طرد شدن نسبتاً بالا",
+   desc:"سطح ترس از طرد شدن در شما نسبتاً بالاست. این ترس ممکن است گاهی شما را از بیان نیازها و احساسات واقعی‌تان باز دارد. تمرین شفقت به خود و کار روی عزت نفس می‌تواند کمک‌کننده باشد."},
+  {min:29, max:35, icon:"💙", label:"ترس از طرد شدن بالا",
+   desc:"سطح ترس از طرد شدن در شما بالاست. این ترس ممکن است به‌طور قابل‌توجهی بر روابط و تصمیم‌گیری‌هایتان تأثیر بگذارد. با شفقت به خود بدانید که این احساس بخشی از تجربه انسانی است و با آگاهی و تمرین می‌توان آن را کاهش داد."}
 ];
 
-var FARSI = "\u06F0\u06F1\u06F2\u06F3\u06F4\u06F5\u06F6\u06F7\u06F8\u06F9";
-function toFa(n) {
-  return ("" + n).replace(/\d/g, function(d) { return FARSI[d]; });
-}
+const FARSI = "۰۱۲۳۴۵۶۷۸۹";
+function toFa(n){ return (""+n).replace(/\d/g, function(d){ return FARSI[d]; }); }
 
-var cur = 0;
-var answers = [];
-var userName = "";
-var activeStage = "sw";
+let cur=0, answers=[], userName="", activeStage="sw";
 
-function goStage(id) {
+function goStage(id){
   document.getElementById(activeStage).classList.add("hidden");
   document.getElementById(id).classList.remove("hidden");
-  activeStage = id;
+  activeStage=id;
 }
 
-function startQ() {
-  var v = document.getElementById("fname").value.trim();
-  if (!v) {
-    document.getElementById("fname").classList.add("err");
-    document.getElementById("fname").focus();
-    return;
-  }
-  userName = v;
+function startQ(){
+  const v=document.getElementById("fname").value.trim();
+  if(!v){ document.getElementById("fname").classList.add("err"); document.getElementById("fname").focus(); return; }
+  userName=v;
   goStage("sq");
   renderQ();
 }
 
-function renderQ() {
-  var total = QUESTIONS.length;
-  var pct = Math.round((cur + 1) / total * 100);
-  document.getElementById("qnum").textContent = "\u0633\u0648\u0627\u0644 " + toFa(cur + 1);
-  document.getElementById("qtxt").textContent = QUESTIONS[cur];
-  document.getElementById("pl").textContent = "\u0633\u0648\u0627\u0644 " + toFa(cur + 1) + " \u0627\u0632 " + toFa(total);
-  document.getElementById("pp").textContent = toFa(pct) + "\u066A";
-  document.getElementById("pf").style.width = pct + "%";
-  var box = document.getElementById("qopts");
-  box.innerHTML = "";
-  for (var i = 0; i < OPTIONS.length; i++) {
-    (function(opt) {
-      var div = document.createElement("div");
-      div.className = "opt" + (answers[cur] === opt.value ? " picked" : "");
-      div.innerHTML = '<div class="rr"></div><span>' + opt.label + "</span>";
-      div.addEventListener("click", function() {
-        answers[cur] = opt.value;
-        renderQ();
-      });
-      box.appendChild(div);
-    })(OPTIONS[i]);
-  }
-  document.getElementById("bnext").disabled = (answers[cur] === undefined);
+function renderQ(){
+  const total=QUESTIONS.length, pct=Math.round((cur+1)/total*100);
+  document.getElementById("qnum").textContent="سوال "+toFa(cur+1);
+  document.getElementById("qtxt").textContent=QUESTIONS[cur];
+  document.getElementById("pl").textContent="سوال "+toFa(cur+1)+" از "+toFa(total);
+  document.getElementById("pp").textContent=toFa(pct)+"٪";
+  document.getElementById("pf").style.width=pct+"%";
+  const box=document.getElementById("qopts");
+  box.innerHTML="";
+  OPTIONS.forEach(function(opt){
+    const div=document.createElement("div");
+    div.className="opt"+(answers[cur]===opt.value?" picked":"");
+    div.innerHTML='<div class="rr"></div><span>'+opt.label+"</span>";
+    div.addEventListener("click",function(){ answers[cur]=opt.value; renderQ(); });
+    box.appendChild(div);
+  });
+  document.getElementById("bnext").disabled=(answers[cur]===undefined);
 }
 
-function nxt() {
-  if (answers[cur] === undefined) return;
-  if (cur < QUESTIONS.length - 1) {
-    cur++;
-    renderQ();
-  } else {
-    showResult();
-  }
+function nxt(){
+  if(answers[cur]===undefined) return;
+  if(cur<QUESTIONS.length-1){ cur++; renderQ(); }
+  else showResult();
 }
 
-function showResult() {
+function showResult(){
   goStage("sr");
-  var total = 0;
-  for (var i = 0; i < answers.length; i++) { total += answers[i]; }
-  var level = null;
-  for (var i = 0; i < LEVELS.length; i++) {
-    if (total >= LEVELS[i].min && total <= LEVELS[i].max) {
-      level = LEVELS[i];
-      break;
-    }
+  const total=answers.reduce(function(s,a){return s+a;},0);
+  let level=null;
+  for(let i=0;i<LEVELS.length;i++){
+    if(total>=LEVELS[i].min && total<=LEVELS[i].max){ level=LEVELS[i]; break; }
   }
-  document.getElementById("ri").textContent = level.icon;
-  document.getElementById("rl").textContent = level.label;
-  document.getElementById("rs").textContent = "\u0646\u0645\u0631\u0647 \u0634\u0645\u0627: " + toFa(total) + " \u0627\u0632 " + toFa(35);
-  document.getElementById("rd").textContent = level.desc;
-  var payload = { sheet: SHEET };
-  payload["\u0646\u0627\u0645"] = userName;
-  payload["\u062a\u0627\u0631\u06cc\u062e"] = new Date().toLocaleString("fa-IR");
-  for (var i = 0; i < QUESTIONS.length; i++) {
-    payload["\u0633" + (i + 1)] = answers[i];
-  }
-  payload["\u0646\u0645\u0631\u0647_\u06a9\u0644"] = total;
-  payload["\u0633\u0637\u062d"] = level.label;
-  fetch(SCRIPT_URL + "?payload=" + encodeURIComponent(JSON.stringify(payload)), {mode: "no-cors"});
+  document.getElementById("ri").textContent=level.icon;
+  document.getElementById("rl").textContent=level.label;
+  document.getElementById("rs").textContent="نمره شما: "+toFa(total)+" از "+toFa(35);
+  document.getElementById("rd").textContent=level.desc;
+
+  const now=new Date();
+  const dateFa=now.toLocaleDateString("fa-IR")+" ، "+now.toLocaleTimeString("fa-IR");
+
+  const payload={
+    sheetName: SHEET,
+    data: {}
+  };
+  payload.data["تاریخ و زمان"] = dateFa;
+  payload.data["نام"] = userName;
+  QUESTIONS.forEach(function(q,i){
+    payload.data["سوال "+(i+1)] = answers[i];
+  });
+  payload.data["نمره کل"] = total;
+  payload.data["سطح ترس از طرد شدن"] = level.label;
+
+  const url=SCRIPT_URL+"?payload="+encodeURIComponent(JSON.stringify(payload));
+  fetch(url,{mode:"no-cors"});
 }
 </script>
-
 </body>
 </html>
